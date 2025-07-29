@@ -1,0 +1,26 @@
+{
+  "name": "fullstack-secure-auth-system",
+  "version": "1.0.0",
+  "description": "Fullstack Secure Authentication System with NestJS, React, TypeScript and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run start:dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^9.32.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.6.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
