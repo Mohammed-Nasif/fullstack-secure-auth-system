@@ -19,9 +19,6 @@ export * from './filters/all-exceptions.filter';
 export * from './middleware/logger.middleware';
 export * from './middleware/content-type.middleware';
 
-// Decorators
-export * from './decorators/error-handler.decorator';
-
 // Interfaces
 export * from './interfaces/auth.interface';
 export * from './interfaces/health.interface';

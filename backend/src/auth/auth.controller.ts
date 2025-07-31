@@ -32,7 +32,6 @@ import {
   createCreatedResponse,
   createErrorResponse,
   AUTH_MESSAGES,
-  HandleErrors,
   API_ENDPOINTS 
 } from '@common';
 
@@ -54,7 +53,6 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'User registered successfully' })
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 409, description: 'User already exists' })
-  @HandleErrors
   async signup(@Body() SignupDto: SignupDto, @Res() res: Response) {
     const { tokens, user } = await this.authService.signup(SignupDto);
     
@@ -75,7 +73,6 @@ export class AuthController {
   @ApiBody({ type: SigninDto })
   @ApiResponse({ status: 200, description: 'User logged in successfully' })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
-  @HandleErrors
   async signin(@Body() signInDto: SigninDto, @Res() res: Response) {
     const { access_token, refresh_token } = await this.authService.signin(signInDto);
     
@@ -94,7 +91,6 @@ export class AuthController {
   @ApiOperation({ summary: 'Refresh access token using cookie' })
   @ApiResponse({ status: 200, description: 'Token refreshed successfully' })
   @ApiResponse({ status: 401, description: 'Invalid or missing refresh token' })
-  @HandleErrors
   async refreshToken(@Req() req: Request, @Res() res: Response) {
     const refreshToken = req.cookies?.refresh_token;
     
@@ -122,7 +118,6 @@ export class AuthController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Logout user' })
   @ApiResponse({ status: 200, description: 'User logged out successfully' })
-  @HandleErrors
   async logout(@Req() req: Request, @Res() res: Response) {
     const user = req.user as { userId: string };
     await this.authService.logout(user.userId);
