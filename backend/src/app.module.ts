@@ -6,7 +6,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { HealthModule } from './health/health.module';
-import { SECURITY_CONFIG, LoggerMiddleware } from '@common';
+import { SECURITY_CONFIG, LoggerMiddleware, ContentTypeMiddleware, API_ENDPOINTS } from '@common';
 import { validationSchema } from './config/validation.config';
 import { getDatabaseConfig } from './config/database.config';
 
@@ -39,6 +39,8 @@ import { getDatabaseConfig } from './config/database.config';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
+      .apply(ContentTypeMiddleware)
+      .forRoutes(`${API_ENDPOINTS.AUTH.BASE}/*`)
       .apply(LoggerMiddleware)
       .forRoutes('*');
   }
