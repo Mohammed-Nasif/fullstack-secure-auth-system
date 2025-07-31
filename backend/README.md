@@ -1,98 +1,204 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🔐 Secure Authentication API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A production-ready NestJS authentication system with comprehensive security features.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🌟 Features
 
-## Description
+- **Secure Authentication**: JWT-based auth with refresh tokens
+- **Password Security**: bcrypt hashing with configurable rounds
+- **Input Validation**: Comprehensive validation with class-validator
+- **Rate Limiting**: Multiple tiers (global, signup, signin)
+- **Security Headers**: Helmet middleware for security headers
+- **Request Logging**: Detailed HTTP request/response logging
+- **API Documentation**: Auto-generated Swagger documentation
+- **Health Monitoring**: Multiple health check endpoints
+- **MongoDB Integration**: Mongoose ODM with connection pooling
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🛠️ Tech Stack
 
-## Project setup
+- **Framework**: NestJS (Node.js)
+- **Database**: MongoDB with Mongoose
+- **Authentication**: JWT with refresh tokens
+- **Validation**: class-validator & class-transformer
+- **Documentation**: Swagger/OpenAPI
+- **Testing**: Jest with comprehensive test coverage
+- **Security**: Helmet, rate limiting, input sanitization
 
-```bash
-$ npm install
-```
+## 📋 API Endpoints
 
-## Compile and run the project
+### Authentication
+- `POST /auth/signup` - User registration
+- `POST /auth/signin` - User login
+- `POST /auth/refresh-token` - Refresh access token
+- `POST /auth/logout` - User logout (protected)
+- `GET /auth/profile` - Get user profile (protected)
 
-```bash
-# development
-$ npm run start
+### Health Monitoring
+- `GET /health` - Basic health check
+- `GET /health/database` - Database connectivity
+- `GET /health/security` - Security configuration
+- `GET /health/detailed` - Comprehensive system status
 
-# watch mode
-$ npm run start:dev
+## 🚀 Quick Start
 
-# production mode
-$ npm run start:prod
-```
+### Prerequisites
+- Node.js (v18+)
+- Docker (for MongoDB)
+- npm or yarn
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Installation
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Clone the repository
+git clone <your-repo-url>
+cd fullstack-secure-auth-system/backend
+
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.example .env
+
+# Start development server [Includes also Databse Start Script]
+npm run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Environment Configuration
 
-## Resources
+Create a `.env` file based on `.env.example`:
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+# Application
+PORT=3000
+NODE_ENV=development
+FRONTEND_URL=http://localhost:3001
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Database
+MONGO_HOST=localhost
+MONGO_PORT=27017
+MONGO_DB_NAME=nest-auth
+MONGO_USER=admin
+MONGO_PASSWORD=adminpass1234
 
-## Support
+# JWT (Generate strong secrets for production)
+JWT_SECRET=your-super-secret-jwt-key
+JWT_EXPIRES_IN=1h
+JWT_REFRESH_SECRET=your-super-secret-refresh-key
+JWT_REFRESH_EXPIRES_IN=7d
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🧪 Testing
 
-## Stay in touch
+```bash
+# Run unit tests
+npm run test
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Run tests with coverage
+npm run test:cov
 
-## License
+# Run e2e tests
+npm run test:e2e
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 📚 API Documentation
+
+Once running, visit:
+- **Swagger UI**: http://localhost:3000/api
+- **Health Check**: http://localhost:3000/health
+
+## 🔒 Security Features
+
+- **Input Validation**: All inputs validated and sanitized
+- **XSS Protection**: HTML/script tag detection and prevention
+- **CSRF Protection**: SameSite cookies implementation
+- **Rate Limiting**: Configurable per endpoint (5 signup/min, 10 signin/min)
+- **Secure Headers**: Comprehensive security headers via Helmet
+- **Password Security**: bcrypt hashing with salt rounds
+- **JWT Security**: Secure token generation with refresh mechanism
+- **Request Size Limits**: Protection against DoS attacks
+
+## 🏗️ Project Structure
+
+```
+src/
+├── auth/           # Authentication module
+├── users/          # User management
+├── health/         # Health monitoring
+├── common/         # Shared utilities
+│   ├── constants/  # Application constants
+│   ├── decorators/ # Custom decorators
+│   ├── filters/    # Exception filters
+│   ├── middleware/ # Custom middleware
+│   └── utils/      # Utility functions
+└── config/         # Configuration files
+```
+
+## 🔧 Available Scripts
+
+```bash
+# Development
+npm run start:dev      # Start with file watching
+
+# Production
+npm run build          # Build for production
+npm run start:prod     # Start production server
+
+# Database
+npm run db:start       # Start MongoDB container
+npm run db:stop        # Stop MongoDB container
+
+# Code Quality
+npm run lint           # Run ESLint
+npm run format         # Format code with Prettier
+
+# Health Checks
+npm run health:check   # Test health endpoint
+```
+
+## 🚀 Production Deployment
+
+### Docker Deployment
+
+```bash
+# Build image
+docker build -t auth-api .
+
+# Run with docker-compose
+docker-compose up -d
+```
+
+### Environment Variables for Production
+
+Ensure these are set securely:
+- Generate strong `JWT_SECRET` and `JWT_REFRESH_SECRET`
+- Set `NODE_ENV=production`
+- Configure secure database credentials
+- Set appropriate `FRONTEND_URL`
+
+## 🛡️ Security Considerations
+
+1. **JWT Secrets**: Use cryptographically strong secrets (32+ characters)
+2. **Database**: Use strong MongoDB credentials
+3. **HTTPS**: Always use HTTPS in production
+4. **Environment**: Never commit `.env` files
+5. **Rate Limiting**: Adjust limits based on your needs
+6. **Logging**: Monitor and rotate logs appropriately
+
+## 📈 Performance Features
+
+- **Connection Pooling**: MongoDB connection pooling
+- **Request Compression**: Gzip compression for responses
+- **Caching**: Response caching for health endpoints
+- **Efficient Queries**: Optimized database queries
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+## 🎯 Future Enhancements
+
+- [ ] Role-based access control (RBAC)
+- [ ] Email verification system
+- [ ] Password reset functionality
+- [ ] User profile management
+- [ ] API versioning
