@@ -12,6 +12,17 @@ import {
   DetailedHealthResponse,
 } from '@common';
 
+/**
+ * Health Monitoring Service
+ * 
+ * Provides comprehensive system health checks including:
+ * - Basic application status
+ * - Database connectivity verification
+ * - Security configuration overview
+ * - Detailed system diagnostics
+ * 
+ * Used by load balancers and monitoring systems
+ */
 @Injectable()
 export class HealthService {
   constructor(
@@ -20,7 +31,8 @@ export class HealthService {
   ) {}
 
   /**
-   * Returns comprehensive system health information
+   * Basic health check for load balancers
+   * @returns Simple health status
    */
   getSystemHealth(): SystemHealthResponse {
     const memoryUsage = process.memoryUsage();
@@ -56,51 +68,8 @@ export class HealthService {
   }
 
   /**
-   * Returns security configuration and active features
-   */
-  getSecurityInfo(): SecurityInfoResponse {
-    const nodeEnv = this.configService.get<string>('NODE_ENV');
-    const isProduction = nodeEnv === 'production';
-    
-    return {
-      message: 'Security features active',
-      features: [
-        '🛡️ Helmet security headers',
-        '⏱️ Rate limiting (100 requests/minute, 5 requests/minute, 10 requests/minute)',
-        '🧹 Input sanitization & XSS protection',
-        '🍪 Secure HTTP-only cookies with SameSite',
-        '🔒 CSRF protection via SameSite cookies',
-        '📏 Request size limits (1MB)',
-        '📋 Content-type validation',
-        '🚨 Global exception handling',
-        '📝 Request logging',
-        '✅ Input validation with class-validator'
-      ],
-      cookieSettings: {
-        httpOnly: true,
-        secure: isProduction,
-        sameSite: 'lax',
-        maxAge: {
-          accessToken: this.configService.get<string>('JWT_EXPIRES_IN') || '15m',
-          refreshToken: this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') || '7d',
-        },
-      },
-      rateLimits: {
-        global: '100 requests/minute',
-        signup: '5 requests/minute',
-        signin: '10 requests/minute'
-      },
-      environment: {
-        nodeEnv: nodeEnv || 'development',
-        isProduction,
-        port: this.configService.get<number>('PORT') || 3000,
-        frontendUrl: this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3000'
-      }
-    };
-  }
-
-  /**
-   * Checks database connectivity and returns detailed status
+   * Database connectivity and performance check
+   * @returns Database connection status and metrics
    */
   async getDatabaseHealth(): Promise<DatabaseHealthResponse> {
     const host = this.configService.get<string>('MONGO_HOST') || 'localhost';
@@ -164,7 +133,53 @@ export class HealthService {
   }
 
   /**
-   * Returns comprehensive health status including all systems
+   * Security configuration overview
+   * @returns Active security features and settings
+   */
+  getSecurityInfo(): SecurityInfoResponse {
+    const nodeEnv = this.configService.get<string>('NODE_ENV');
+    const isProduction = nodeEnv === 'production';
+    
+    return {
+      message: 'Security features active',
+      features: [
+        '🛡️ Helmet security headers',
+        '⏱️ Rate limiting (100 requests/minute, 5 requests/minute, 10 requests/minute)',
+        '🧹 Input sanitization & XSS protection',
+        '🍪 Secure HTTP-only cookies with SameSite',
+        '🔒 CSRF protection via SameSite cookies',
+        '📏 Request size limits (1MB)',
+        '📋 Content-type validation',
+        '🚨 Global exception handling',
+        '📝 Request logging',
+        '✅ Input validation with class-validator'
+      ],
+      cookieSettings: {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: 'lax',
+        maxAge: {
+          accessToken: this.configService.get<string>('JWT_EXPIRES_IN') || '15m',
+          refreshToken: this.configService.get<string>('JWT_REFRESH_EXPIRES_IN') || '7d',
+        },
+      },
+      rateLimits: {
+        global: '100 requests/minute',
+        signup: '5 requests/minute',
+        signin: '10 requests/minute'
+      },
+      environment: {
+        nodeEnv: nodeEnv || 'development',
+        isProduction,
+        port: this.configService.get<number>('PORT') || 3000,
+        frontendUrl: this.configService.get<string>('FRONTEND_URL') || 'http://localhost:3000'
+      }
+    };
+  }
+
+  /**
+   * Comprehensive system diagnostics
+   * @returns Detailed system information and metrics
    */
   async getDetailedHealth(): Promise<DetailedHealthResponse> {
     const systemHealth = this.getSystemHealth();
