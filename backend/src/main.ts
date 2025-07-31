@@ -11,10 +11,9 @@ import * as express from 'express';
 import { 
   SECURITY_CONFIG, 
   AllExceptionsFilter, 
-  ENVIRONMENT, 
   EnvironmentUtils,
   API_ENDPOINTS,
-  EndpointUtils
+  EndpointUtils,
 } from '@common';
 
 async function bootstrap() {
@@ -65,7 +64,6 @@ async function bootstrap() {
       transformOptions: {
         enableImplicitConversion: true,
       },
-      // Disable error messages in production only
       disableErrorMessages: EnvironmentUtils.isProduction(nodeEnv),
     }),
   );
