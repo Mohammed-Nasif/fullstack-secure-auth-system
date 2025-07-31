@@ -3,6 +3,16 @@ import { Request, Response, NextFunction } from 'express';
 import chalk from 'chalk';
 import { HttpStatusUtil } from '../utils/http-status.util';
 
+/**
+ * HTTP Request/Response Logger Middleware
+ * 
+ * Features:
+ * - Colored console output for better readability
+ * - Request timing and response size tracking
+ * - User context logging (when authenticated)
+ * - Different log levels based on response status
+ * - Truncated user agent for cleaner logs
+ */
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   private readonly logger = new Logger('HTTP');
@@ -42,6 +52,9 @@ export class LoggerMiddleware implements NestMiddleware {
     next();
   }
 
+  /**
+   * Logs incoming request details with user context
+   */
   private logRequest(method: string, url: string, ip: string, userAgent: string, userId: string, email: string) {
     const cleanIp = ip?.replace('::ffff:', '') || 'unknown';
     const shortUserAgent = userAgent.substring(0, 50) + (userAgent.length > 50 ? '...' : '');
@@ -58,6 +71,9 @@ export class LoggerMiddleware implements NestMiddleware {
     this.logger.log(`${arrow} ${methodColor} ${chalk.white(url)} | ${context}`);
   }
 
+  /**
+   * Formats response log with performance metrics
+   */
   private static formatResponse(method: string, url: string, statusCode: number, duration: number, size: string, userId: string): string {
     const { color, icon, statusText } = LoggerMiddleware.getStatusInfo(statusCode);
     const methodColor = LoggerMiddleware.getMethodColorStatic(method);
@@ -71,10 +87,16 @@ export class LoggerMiddleware implements NestMiddleware {
     return `${icon} ${methodColor} ${chalk.white(url)} ${color} ${chalk.dim(`(${statusText})`)} | ${context}`;
   }
 
+  /**
+   * Returns colored HTTP method for console output
+   */
   private getMethodColor(method: string): string {
     return LoggerMiddleware.getMethodColorStatic(method);
   }
 
+  /**
+   * Static version of method color for response formatting
+   */
   private static getMethodColorStatic(method: string): string {
     switch (method) {
       case 'GET': return chalk.green(method);
@@ -86,6 +108,9 @@ export class LoggerMiddleware implements NestMiddleware {
     }
   }
 
+  /**
+   * Returns status code styling with icons
+   */
   private static getStatusInfo(statusCode: number): { color: string; icon: string; statusText: string } {
     const statusText = HttpStatusUtil.getStatusText(statusCode);
     
@@ -100,6 +125,9 @@ export class LoggerMiddleware implements NestMiddleware {
     }
   }
 
+  /**
+   * Returns duration-based color coding
+   */
   private static getDurationColor(duration: number): string {
     if (duration > 2000) return chalk.red.bold(`${duration}ms`);
     if (duration > 1000) return chalk.yellow.bold(`${duration}ms`);
