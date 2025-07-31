@@ -9,7 +9,7 @@ import {
 import { Request, Response } from 'express';
 import chalk from 'chalk';
 import { createErrorResponse } from '../utils/response.util';
-import { HttpStatusUtil } from '../utils/http-status.util';
+import { getStatusText } from '@common'; // Use function-based approach
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -56,10 +56,11 @@ export class AllExceptionsFilter implements ExceptionFilter {
       `agent: ${chalk.gray(userAgent)}`
     ].filter(Boolean).join(' | ');
 
-    const logMessage = `${icon} ${methodColor} ${chalk.white(url)} ${statusColor} ${chalk.dim(`(${statusText})`)} - ${chalk.white(message)} | ${context}`;
+    // Ensure no trailing newlines or extra spaces
+    const logMessage = `${icon} ${methodColor} ${chalk.white(url)} ${statusColor} ${chalk.dim(`(${statusText})`)} - ${chalk.white(message)} | ${context}`.trim();
     
     if (status >= 500) {
-      this.logger.error(logMessage, exception instanceof Error ? exception.stack : undefined);
+      this.logger.error(logMessage, exception instanceof Error ? exception.stack?.trim() : undefined);
     } else if (status >= 400) {
       this.logger.error(logMessage);
     } else if (status >= 300) {
@@ -70,7 +71,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
   }
 
   private getErrorInfo(status: number): { color: string; icon: string; statusText: string } {
-    const statusText = HttpStatusUtil.getStatusText(status);
+    const statusText = getStatusText(status);
     
     if (status >= 500) {
       return { color: chalk.red.bold(status.toString()), icon: chalk.red('🔥'), statusText };

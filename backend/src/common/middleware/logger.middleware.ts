@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import chalk from 'chalk';
-import { HttpStatusUtil } from '../utils/http-status.util';
+import { getStatusText } from '@common';
 
 /**
  * HTTP Request/Response Logger Middleware
@@ -84,7 +84,8 @@ export class LoggerMiddleware implements NestMiddleware {
       userId !== 'anonymous' ? `${chalk.dim('user')}: ${chalk.blue(userId)}` : null
     ].filter(Boolean).join(' | ');
 
-    return `${icon} ${methodColor} ${chalk.white(url)} ${color} ${chalk.dim(`(${statusText})`)} | ${context}`;
+    // Ensure no trailing newlines or extra spaces
+    return `${icon} ${methodColor} ${chalk.white(url)} ${color} ${chalk.dim(`(${statusText})`)} | ${context}`.trim();
   }
 
   /**
@@ -112,7 +113,7 @@ export class LoggerMiddleware implements NestMiddleware {
    * Returns status code styling with icons
    */
   private static getStatusInfo(statusCode: number): { color: string; icon: string; statusText: string } {
-    const statusText = HttpStatusUtil.getStatusText(statusCode);
+    const statusText = getStatusText(statusCode);
     
     if (statusCode >= 500) {
       return { color: chalk.red.bold(statusCode.toString()), icon: chalk.red('🔥'), statusText };
