@@ -13,22 +13,38 @@ import { Types } from 'mongoose';
 import { ConfigService } from '@nestjs/config';
 import { SECURITY_CONFIG, AUTH_MESSAGES } from '@common';
 
+/**
+ * Authentication Service
+ * 
+ * Handles all authentication-related operations including:
+ * - User registration with secure password hashing
+ * - User authentication with credential validation
+ * - JWT token generation and refresh token management
+ * - Secure logout with token invalidation
+ * 
+ * Security Features:
+ * - bcrypt password hashing with configurable rounds
+ * - JWT access/refresh token pair implementation
+ * - Refresh token rotation for enhanced security
+ * - Comprehensive input validation and sanitization
+ */
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
 
   /**
    * Registers a new user with the provided credentials.
    * 
-   * - Checks if the email is already in use and throws a `ConflictException` if so.
-   * - Hashes the user's password before storing.
-   * - Creates the user in the repository.
-   * - Generates access and refresh tokens for the new user.
-   * - Hashes and stores the refresh token.
+   * Process:
+   * 1. Validates email uniqueness
+   * 2. Hashes password with bcrypt
+   * 3. Creates user record
+   * 4. Generates JWT token pair
+   * 5. Stores hashed refresh token
    * 
    * @param SignupDto - Data transfer object containing user registration details (email, password, etc.).
    * @returns An object containing authentication tokens, and basic user information.
@@ -63,11 +79,17 @@ export class AuthService {
   }
 
   /**
-   * Authenticates a user with the provided credentials.
-   *
-   * @param signInDto - Data transfer object containing the user's email and password.
-   * @returns An object containing the access and refresh tokens if authentication is successful.
-   * @throws UnauthorizedException If the credentials are invalid or authentication fails.
+   * Authenticates user credentials
+   * 
+   * Process:
+   * 1. Validates user exists
+   * 2. Compares password hash
+   * 3. Generates new token pair
+   * 4. Updates refresh token
+   * 
+   * @param signinDto - User login credentials
+   * @returns Authentication tokens
+   * @throws UnauthorizedException - Invalid credentials
    */
   async signin(signInDto: SigninDto) {
     const { email, password } = signInDto;
@@ -86,17 +108,17 @@ export class AuthService {
   }
 
   /**
-   * Refreshes the authentication tokens for a user.
-   *
-   * This method verifies the provided refresh token (`rt`) against the stored hashed refresh token
-   * for the user identified by `userId`. If the token is valid, it generates new access and refresh tokens,
-   * hashes the new refresh token, and updates it in the user's record.
-   *
-   * @param userId - The unique identifier of the user requesting token refresh.
-   * @param rt - The refresh token provided by the user.
-   * @returns A promise that resolves to an object containing new authentication tokens.
-   * @throws {ForbiddenException} If the user does not exist, does not have a stored refresh token,
-   *         or if the provided refresh token is invalid.
+   * Refreshes access token using refresh token
+   * 
+   * Security:
+   * - Validates refresh token hash
+   * - Generates new token pair
+   * - Rotates refresh token
+   * 
+   * @param userId - User identifier
+   * @param refreshToken - Current refresh token
+   * @returns New authentication tokens
+   * @throws UnauthorizedException - Invalid refresh token
    */
   async refreshToken(userId: string, rt: string) {
     const user = await this.usersRepository.findById(userId);
@@ -114,21 +136,24 @@ export class AuthService {
   }
 
   /**
-   * Logs out the user by removing their refresh token from the repository.
-   *
-   * @param userId - The unique identifier of the user to log out.
-   * @returns A promise that resolves when the refresh token has been removed.
+   * Securely logs out user
+   * 
+   * Process:
+   * 1. Invalidates refresh token
+   * 2. Clears stored refresh token hash
+   * 
+   * @param userId - User identifier
    */
-  async logout(userId: string) {
+  async logout(userId: string): Promise<void> {
     await this.usersRepository.removeRefreshToken(userId);
   }
 
   /**
-   * Generates JWT access and refresh tokens for a given user.
-   *
-   * @param userId - The unique identifier of the user.
-   * @param email - The email address of the user.
-   * @returns An object containing the generated `access_token` and `refresh_token`.
+   * Generates JWT access and refresh token pair
+   * 
+   * @param userId - User identifier
+   * @param email - User email
+   * @returns Token pair with expiration info
    */
   private async generateTokens(userId: string, email: string) {
     const payload = { sub: userId, email };
