@@ -23,7 +23,7 @@ export class HealthController {
   @Get()
   @ApiOperation({
     summary: 'Basic health check',
-    description: '⚠️ PUBLIC endpoint - consider protecting in production'
+    description: 'PUBLIC endpoint - consider protecting in production'
   })
   getHealth(): BasicHealthResponse {
     // TODO: Return minimal info only for public access
@@ -54,7 +54,7 @@ export class HealthController {
   @Get(API_ENDPOINTS.HEALTH.DETAILED)
   @ApiOperation({
     summary: 'Comprehensive system status',
-    description: '🔒 TODO: Protect with ADMIN role in production'
+    description: 'TODO: Protect with ADMIN role in production'
   })
   async getDetailedHealth() {
     return await this.healthService.getDetailedHealth();
