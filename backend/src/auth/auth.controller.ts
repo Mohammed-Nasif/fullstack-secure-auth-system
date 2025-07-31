@@ -116,7 +116,7 @@ export class AuthController {
   @Post(API_ENDPOINTS.AUTH.LOGOUT)
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Logout user' })
+  @ApiOperation({ summary: 'Logout user  (protected endpoint)' })
   @ApiResponse({ status: 200, description: 'User logged out successfully' })
   async logout(@Req() req: Request, @Res() res: Response) {
     const user = req.user as { userId: string };
