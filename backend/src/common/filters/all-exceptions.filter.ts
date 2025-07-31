@@ -9,7 +9,7 @@ import {
 import { Request, Response } from 'express';
 import chalk from 'chalk';
 import { createErrorResponse } from '../utils/response.util';
-import { getStatusText } from '@common'; // Use function-based approach
+import { getStatusText } from '@common';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
