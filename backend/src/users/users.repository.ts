@@ -15,10 +15,10 @@ export class UsersRepository {
    * Creates and saves a new user document.
    * @param SignupDto Data Transfer Object for user creation
    * @returns Created User document
+   * @throws {MongoError} If validation fails or duplicate key constraint is violated
    */
   async create(SignupDto: SignupDto): Promise<UserDocument> {
-    const createdUser = new this.userModel(SignupDto);
-    return await createdUser.save();
+    return await this.userModel.create(SignupDto);
   }
 
   /**
@@ -40,33 +40,29 @@ export class UsersRepository {
   }
 
   /**
-   * Checks if a user with the given email exists.
-   * @param email User's email address
-   * @returns true if user exists, false otherwise
-   */
-  async existsByEmail(email: string): Promise<boolean> {
-    const user = await this.userModel.exists({ email });
-    return !!user;
-  }
-
-  /**
    * Updates the hashed refresh token for a specific user.
-   *
    * @param userId - The unique identifier of the user whose refresh token is to be updated.
    * @param hashedRt - The new hashed refresh token to store for the user.
    * @returns A promise that resolves when the update operation is complete.
    */
-  async updateRefreshToken(userId: string, hashedRt: string) {
-    await this.userModel.findByIdAndUpdate(userId, { hashedRefreshToken: hashedRt });
+  async updateRefreshToken(userId: string, hashedRt: string): Promise<UserDocument | null> {
+    return await this.userModel.findByIdAndUpdate(
+      userId, 
+      { hashedRefreshToken: hashedRt },
+      { new: true }
+    );
   }
 
   /**
    * Removes the hashed refresh token for a user by setting it to null.
-   *
    * @param userId - The unique identifier of the user whose refresh token should be removed.
    * @returns A promise that resolves when the operation is complete.
    */
-  async removeRefreshToken(userId: string) {
-    await this.userModel.findByIdAndUpdate(userId, { hashedRefreshToken: null });
+  async removeRefreshToken(userId: string): Promise<UserDocument | null> {
+    return await this.userModel.findByIdAndUpdate(
+      userId, 
+      { hashedRefreshToken: null },
+      { new: true }
+    );
   }
 }
