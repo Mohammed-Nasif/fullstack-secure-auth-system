@@ -51,31 +51,42 @@ export class AuthService {
    * @throws {ConflictException} If the email is already registered.
    */
   async signup(SignupDto: SignupDto) {
-    const { email, password } = SignupDto;
-
-    const emailExists = await this.usersRepository.existsByEmail(email);
-    if (emailExists) {
-      throw new ConflictException(AUTH_MESSAGES.EMAIL_EXISTS);
-    }
+    const { password } = SignupDto;
 
     const hashedPassword = await bcrypt.hash(password, SECURITY_CONFIG.BCRYPT_ROUNDS);
-    const newUser = await this.usersRepository.create({
-      ...SignupDto,
-      password: hashedPassword,
-    });
+    
+    try {
+      const newUser = await this.usersRepository.create({
+        ...SignupDto,
+        password: hashedPassword,
+      });
 
-    const tokens = await this.generateTokens((newUser._id as Types.ObjectId).toString(), newUser.email);
-    const hashedRt = await bcrypt.hash(tokens.refresh_token, SECURITY_CONFIG.BCRYPT_ROUNDS);
-    await this.usersRepository.updateRefreshToken((newUser._id as Types.ObjectId).toString(), hashedRt);
+      const tokens = await this.generateTokens(
+        (newUser._id as Types.ObjectId).toString(), 
+        newUser.email
+      );
+      
+      const hashedRt = await bcrypt.hash(tokens.refresh_token, SECURITY_CONFIG.BCRYPT_ROUNDS);
+      await this.usersRepository.updateRefreshToken(
+        (newUser._id as Types.ObjectId).toString(), 
+        hashedRt
+      );
 
-    return {
-      tokens,
-      user: {
-        id: newUser._id,
-        email: newUser.email,
-        name: newUser.name,
-      },
-    };
+      return {
+        tokens,
+        user: {
+          id: newUser._id,
+          email: newUser.email,
+          name: newUser.name,
+        },
+      };
+    } catch (error: any) {
+      if (error.code === 11000 || error.message?.includes('duplicate key')) {
+        throw new ConflictException(AUTH_MESSAGES.EMAIL_EXISTS);
+      }
+      
+      throw error;
+    }
   }
 
   /**
