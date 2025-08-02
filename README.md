@@ -7,6 +7,7 @@ A production-ready authentication system built with **NestJS**, **MongoDB**, **R
 ### Prerequisites
 - Node.js (v18+)
 - Docker (for MongoDB)
+  - **GUI Users**: If you're using Docker Desktop or another Docker GUI, please ensure it's running before starting the application
 - Git
 
 ### Installation & Setup
@@ -34,6 +35,8 @@ cp .env.example .env
 # From root directory - starts both backend and frontend
 npm run dev
 ```
+
+> **💡 Docker GUI Reminder**: Make sure Docker Desktop (or your Docker GUI) is running before executing the above command.
 
 The application will be available at:
 - **Frontend**: http://localhost:3001
@@ -71,19 +74,33 @@ The application will be available at:
 ```
 ├── backend/          # NestJS API Server
 │   ├── src/
-│   │   ├── auth/     # Authentication module
-│   │   ├── users/    # User management
-│   │   ├── health/   # Health monitoring
-│   │   └── common/   # Shared utilities
-│   └── README.md     # Backend setup guide
+│   │   ├── auth/           # Authentication module
+│   │   │   ├── dtos/       # Data transfer objects
+│   │   │   └── guards/     # JWT guards
+│   │   ├── users/          # User management module
+│   │   │   └── schemas/    # MongoDB schemas
+│   │   ├── health/         # Health monitoring module
+│   │   ├── common/         # Shared utilities
+│   │   │   ├── constants/  # Application constants
+│   │   │   ├── filters/    # Exception filters
+│   │   │   ├── middleware/ # Request middleware
+│   │   │   └── utils/      # Helper functions
+│   │   └── config/         # Configuration files
+│   ├── package.json        # Backend dependencies & scripts
+│   └── README.md           # Backend setup guide
 ├── frontend/         # React Application
 │   ├── src/
-│   │   ├── components/  # UI components
-│   │   ├── pages/       # Sign up, Sign in, Home
-│   │   ├── hooks/       # Authentication hooks
-│   │   └── services/    # API communication
-│   └── README.md     # Frontend setup guide
-└── package.json      # Root workspace configuration
+│   │   ├── components/     # UI components
+│   │   │   ├── forms/      # Form components
+│   │   │   ├── layouts/    # Layout components
+│   │   │   └── ui/         # Reusable UI components
+│   │   ├── pages/          # Sign up, Sign in, Home
+│   │   ├── hooks/          # Authentication & custom hooks
+│   │   ├── services/       # API communication
+│   │   └── types/          # TypeScript definitions
+│   ├── package.json        # Frontend dependencies & scripts
+│   └── README.md           # Frontend setup guide
+└── package.json            # Root workspace configuration
 ```
 
 ## 🛠️ Tech Stack
