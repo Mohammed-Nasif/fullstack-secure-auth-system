@@ -43,7 +43,7 @@ The application will be available at:
 - **Backend API**: http://localhost:3000
 - **API Documentation**: http://localhost:3000/api
 
-## 📋 Assessment Features Implemented
+## 📋 Features Implemented
 
 ### ✅ Frontend Requirements (React + TypeScript)
 - **Sign Up Page**: Email validation, name (3+ chars), password complexity.
