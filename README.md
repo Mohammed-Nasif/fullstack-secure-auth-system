@@ -50,13 +50,15 @@ The application will be available at:
 - **TypeScript**: Full type safety throughout the application.
 
 ### ✅ Backend Requirements (NestJS + MongoDB)
-- **Authentication Endpoints**: Sign up, sign in, logout, profile.
+- **Authentication Endpoints**: Sign up, sign in, logout, profile, refresh token.
+- **JWT Security**: Access tokens (1h) + refresh tokens (7d) with automatic rotation.
 - **Protected Routes**: JWT-based route protection.
 - **MongoDB Integration**: User data persistence with Mongoose.
 - **Security Best Practices**: Password hashing, input validation, rate limiting.
 - **API Documentation**: Swagger documentation.
 
 ### 🌟 Bonus Features
+- **Automatic Token Refresh**: Seamless user experience with automatic token renewal
 - **Comprehensive Logging**: Request/response logging with Winston
 - **Error Handling**: Global exception filters.
 - **Health Monitoring**: Multiple health check endpoints.
@@ -105,7 +107,9 @@ The application will be available at:
 ## 🔐 Security Features
 
 - **Password Security**: bcrypt hashing with salt rounds.
-- **JWT Authentication**: Secure token-based authentication.
+- **Dual Token System**: Access tokens (1h) + refresh tokens (7d) for enhanced security.
+- **Automatic Token Refresh**: Frontend automatically handles token expiration.
+- **JWT Authentication**: Secure token-based authentication with rotation.
 - **Input Validation**: Comprehensive DTO validation.
 - **Rate Limiting**: Protection against brute force attacks.
 - **CORS Protection**: Configured for secure cross-origin requests.
@@ -120,7 +124,8 @@ Interactive API documentation is available at http://localhost:3000/api when the
 - `POST /auth/signup` - User registration
 - `POST /auth/signin` - User authentication  
 - `GET /auth/profile` - Get user profile (protected)
-- `POST /auth/logout` - User logout
+- `POST /auth/refresh-token` - Refresh expired access token (protected)
+- `POST /auth/logout` - User logout (protected)
 - `GET /health` - Application health check
 
 ## 🧪 Testing
