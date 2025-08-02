@@ -1,11 +1,22 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { authApi } from '../services/authApi';
+import { authApi, setAuthFailureCallback } from '../services/authApi';
 import { SignupData, SigninData, User, AuthHookReturn } from '../types/auth.types';
 
 export const useAuth = (): AuthHookReturn => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  // Set up auth failure callback on mount
+  useEffect(() => {
+    setAuthFailureCallback(() => {
+      // Clear any stored state and redirect to signin
+      setError('Your session has expired. Please sign in again.');
+      navigate('/signin', { replace: true });
+    });
+  }, [navigate]);
 
   const signup = useCallback(async (data: SignupData): Promise<{ success: boolean; user?: User }> => {
     setLoading(true);
@@ -42,6 +53,7 @@ export const useAuth = (): AuthHookReturn => {
   const logout = useCallback(async (): Promise<void> => {
     try {
       await authApi.logout();
+      setError(null);
     } catch (err) {
       console.error('Logout error:', err);
     }
@@ -55,7 +67,7 @@ export const useAuth = (): AuthHookReturn => {
       await authApi.refreshToken();
       return { success: true };
     } catch (err: unknown) {
-      const message = axios.isAxiosError(err) && err.response?.data?.message || 'Token refresh failed';
+      const message = axios.isAxiosError(err) && err.response?.data?.message || 'Session expired';
       setError(message);
       return { success: false };
     } finally {
@@ -66,7 +78,14 @@ export const useAuth = (): AuthHookReturn => {
   const getProfile = useCallback(async (): Promise<User | null> => {
     try {
       return await authApi.getProfile();
-    } catch {
+    } catch (err) {
+      // The axios interceptor will handle 401s automatically
+
+      if (axios.isAxiosError(err) && err.response?.status === 401) {
+        // This means refresh failed and user is being redirected
+        return null;
+      }
+      console.error('Profile fetch error:', err);
       return null;
     }
   }, []);
