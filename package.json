@@ -1,48 +1,11 @@
 {
   "name": "fullstack-secure-auth-system",
   "version": "1.0.0",
-  "description": "Fullstack Secure Authentication System with NestJS, React, TypeScript and MongoDB",
-  "main": "index.js",
-  "scripts": {
-    "dev:backend": "npm --prefix backend run start:dev",
-    "dev:frontend": "npm --prefix frontend run dev",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "install:all": "npm install && npm --prefix backend install && npm --prefix frontend install",
-    "build:backend": "npm --prefix backend run build",
-    "build:frontend": "npm --prefix frontend run build",
-    "build": "npm run build:backend && npm run build:frontend",
-    "start:backend": "npm --prefix backend run start:prod",
-    "start:frontend": "npm --prefix frontend run preview",
-    "test:backend": "npm --prefix backend run test",
-    "test:frontend": "npm --prefix frontend run test",
-    "test": "npm run test:backend && npm run test:frontend",
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "format": "prettier --write .",
-    "clean": "rimraf backend/dist frontend/dist",
-    "postinstall": "echo '\n🚀 Setup complete! Run npm run dev to start both servers'"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.38.0",
-    "@typescript-eslint/parser": "^8.38.0",
-    "concurrently": "^8.2.2",
-    "eslint": "^9.32.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "prettier": "^3.6.2",
-    "rimraf": "^5.0.0"
-  },
-  "keywords": [
-    "fullstack",
-    "authentication",
-    "nestjs",
-    "react",
-    "typescript",
-    "mongodb",
-    "jwt",
-    "security",
-    "bcrypt",
-    "tailwindcss"
+  "description": "Fullstack Secure Authentication System with NestJS, React, TypeScript, and MongoDB",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
   ],
   "author": "Mohammed Nasif <m.khaled100@ymail.com>",
   "license": "MIT",
@@ -54,8 +17,34 @@
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
   },
-  "workspaces": [
-    "backend",
-    "frontend"
+  "scripts": {
+    "install:all": "npm install && npm --prefix backend install && npm --prefix frontend install",
+    "dev:backend": "npm --workspace backend run dev",
+    "dev:frontend": "wait-on http://localhost:3000/health && npm --workspace frontend run dev",
+    "dev": "concurrently -k -n BACKEND,FRONTEND -c yellow,cyan \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build": "npm run build --workspace backend && npm run build --workspace frontend",
+    "start": "npm run start --workspace backend && npm run preview --workspace frontend",
+    "test": "npm run test --workspace backend && npm run test --workspace frontend",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write .",
+    "clean": "rimraf backend/dist frontend/dist"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "eslint": "^9.32.0",
+    "prettier": "^3.6.2",
+    "rimraf": "^5.0.0",
+    "wait-on": "^8.0.4"
+  },
+  "keywords": [
+    "fullstack",
+    "nestjs",
+    "react",
+    "auth",
+    "typescript",
+    "mongodb",
+    "vite",
+    "tailwindcss"
   ]
 }
