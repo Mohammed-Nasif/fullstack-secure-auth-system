@@ -63,7 +63,7 @@ const Signin = () => {
         {error && <AlertMessage type="error" message={error} />}
         {successMessage && <AlertMessage type="success" message={successMessage} />}
 
-        <SubmitButton loading={loading}>
+        <SubmitButton loading={loading} disabled={successMessage !== null}>
           Sign In
         </SubmitButton>
       </form>

@@ -89,7 +89,7 @@ const Signup = () => {
         {error && <AlertMessage type="error" message={error} />}
         {successMessage && <AlertMessage type="success" message={successMessage} />}
 
-        <SubmitButton loading={loading}>
+        <SubmitButton loading={loading} disabled={successMessage !== null}>
           Create Account
         </SubmitButton>
       </form>
