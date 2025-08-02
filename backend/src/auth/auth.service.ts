@@ -11,6 +11,7 @@ import { SignupDto } from './dtos/signup.dto';
 import { SigninDto } from './dtos/signin.dto';
 import { Types } from 'mongoose';
 import { ConfigService } from '@nestjs/config';
+import { User } from '../users/schemas/user.schema';
 import { SECURITY_CONFIG, AUTH_MESSAGES } from '@common';
 
 /**
@@ -157,6 +158,22 @@ export class AuthService {
    */
   async logout(userId: string): Promise<void> {
     await this.usersRepository.removeRefreshToken(userId);
+  }
+
+  /**
+   * Retrieves user profile information
+   * 
+   * @param userId - User identifier
+   * @returns User profile data | null
+   */
+  async getProfile(userId: string): Promise<Partial<User> | null> {
+    const user = await this.usersRepository.findById(userId);
+    if (!user) return null;
+
+    return {
+      email: user.email,
+      name: user.name,
+    };
   }
 
   /**
