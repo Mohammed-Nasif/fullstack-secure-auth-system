@@ -84,7 +84,6 @@ export class LoggerMiddleware implements NestMiddleware {
       userId !== 'anonymous' ? `${chalk.dim('user')}: ${chalk.blue(userId)}` : null
     ].filter(Boolean).join(' | ');
 
-    // Ensure no trailing newlines or extra spaces
     return `${icon} ${methodColor} ${chalk.white(url)} ${color} ${chalk.dim(`(${statusText})`)} | ${context}`.trim();
   }
 

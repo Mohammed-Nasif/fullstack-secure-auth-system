@@ -56,7 +56,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
       `agent: ${chalk.gray(userAgent)}`
     ].filter(Boolean).join(' | ');
 
-    // Ensure no trailing newlines or extra spaces
     const logMessage = `${icon} ${methodColor} ${chalk.white(url)} ${statusColor} ${chalk.dim(`(${statusText})`)} - ${chalk.white(message)} | ${context}`.trim();
     
     if (status >= 500) {

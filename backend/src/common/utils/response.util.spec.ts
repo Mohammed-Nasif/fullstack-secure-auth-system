@@ -32,11 +32,9 @@ describe('ResponseUtil', () => {
     });
   });
 
-  // 🔧 Fix: Test the actual function signature based on your implementation
   describe('createUserResponse', () => {
     it('should create user response with user data', () => {
       const userData = { id: '123', name: 'John' };
-      // Assuming your actual function signature creates user responses like this
       const response = {
         statusCode: 201,
         message: 'Created successfully',

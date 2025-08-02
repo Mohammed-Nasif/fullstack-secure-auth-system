@@ -322,7 +322,7 @@ describe('CookieUtil', () => {
 
       expect(() => {
         getAccessTokenCookieConfig(mockConfigService);
-      }).toThrow('Invalid duration: expected non-empty string'); // This is expected behavior
+      }).toThrow('Invalid duration: expected non-empty string');
 
       // Test with default fallback
       const mockConfigServiceWithDefaults = {

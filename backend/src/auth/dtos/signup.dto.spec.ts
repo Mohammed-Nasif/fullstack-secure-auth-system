@@ -58,7 +58,6 @@ describe('SignupDto', () => {
       password: 'SecurePass123!',
     });
 
-    // Test that transforms are applied (if implemented)
     expect(dto.email).toBeDefined();
   });
 });

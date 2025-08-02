@@ -55,7 +55,6 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  // Enhanced validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
