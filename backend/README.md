@@ -1,91 +1,153 @@
-# 🔐 Secure Authentication API
+# 🔐 Authentication API - Backend
 
-A production-ready NestJS authentication system with comprehensive security features built for enterprise applications.
+NestJS-based authentication system with MongoDB.
 
-## 🌟 Features
+## 📋 Requirements Fulfilled
 
-- **Secure Authentication**: JWT-based auth with refresh token rotation
-- **Password Security**: bcrypt hashing with configurable salt rounds
-- **Input Validation**: Comprehensive validation with class-validator
-- **Rate Limiting**: Multi-tier protection (global, signup, signin)
-- **Security Headers**: Helmet middleware with CSP and HSTS
-- **Request Logging**: Detailed HTTP request/response logging with colors
-- **API Documentation**: Auto-generated Swagger/OpenAPI documentation
-- **Health Monitoring**: Multiple health check endpoints for load balancers
-- **MongoDB Integration**: Mongoose ODM with connection pooling and transactions
-
-## 🛠️ Tech Stack
-
-- **Framework**: NestJS (Node.js) - Enterprise-grade TypeScript framework
-- **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT with refresh tokens and secure cookie storage
-- **Validation**: class-validator & class-transformer for DTO validation
-- **Documentation**: Swagger/OpenAPI 3.0 with interactive UI
-- **Testing**: Jest with comprehensive unit and integration tests
-- **Security**: Helmet, rate limiting, input sanitization, XSS protection
-- **Logging**: Winston with colored console output and file rotation
-
-## 📋 API Endpoints
-
-### Authentication
-- `POST /auth/signup` - User registration with validation
-- `POST /auth/signin` - User login with credential verification
-- `POST /auth/refresh-token` - Refresh access token using secure cookies
-- `POST /auth/logout` - User logout with token invalidation (protected)
-- `GET /auth/profile` - Get current user profile (protected)
-
-### Health Monitoring
-- `GET /health` - Basic application health check
-- `GET /health/database` - Database connectivity and performance
-- `GET /health/security` - Security configuration overview
-- `GET /health/detailed` - Comprehensive system diagnostics
+✅ **NestJS Framework**: Enterprise-grade Node.js framework with TypeScript. 
+✅ **MongoDB Integration**: User data persistence with Mongoose ODM.
+✅ **Authentication Endpoints**: Sign up, sign in with validation.
+✅ **Protected Endpoints**: JWT-based route protection.
+✅ **Security Best Practices**: Password hashing, input validation, rate limiting.
+✅ **Logging**: Comprehensive request/response logging.
+✅ **API Documentation**: Interactive Swagger documentation.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Node.js** (v18+) - JavaScript runtime
-- **Docker** - For MongoDB container
-- **npm or yarn** - Package manager
+- Node.js (v18+)
+- Docker (for MongoDB)
 
-### Installation
+### Setup & Run
 
 ```bash
-# Clone the repository
-git clone <your-repo-url>
-cd fullstack-secure-auth-system/backend
-
 # Install dependencies
 npm install
 
-# Copy environment variables
+# Copy environment file
 cp .env.example .env
-# Edit .env with your configuration
 
 # Start MongoDB and development server
-npm run start:dev
+npm run dev
 ```
 
-### Environment Configuration
+The API will be available at:
+- **Base URL**: http://localhost:3000
+- **API Documentation**: http://localhost:3000/api
+- **Health Check**: http://localhost:3000/health
 
-Create a `.env` file based on `.env.example`:
+## � API Endpoints
+
+### Authentication Endpoints
+| Method | Endpoint | Description | Protection |
+|--------|----------|-------------|------------|
+| `POST` | `/auth/signup` | User registration with validation | Public |
+| `POST` | `/auth/signin` | User authentication | Public |
+| `GET` | `/auth/profile` | Get current user details | **Protected** |
+| `POST` | `/auth/logout` | User logout | **Protected** |
+
+### Health Monitoring
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health` | Basic health check |
+| `GET` | `/health/database` | Database connectivity |
+| `GET` | `/health/detailed` | Comprehensive diagnostics |
+
+## � Security Features
+
+### Input Validation & Security
+- **DTO Validation**: Comprehensive field validation using class-validator.
+- **Password Requirements**: 8+ chars, letter, number, special character.
+- **Email Validation**: Proper email format checking.
+- **XSS Protection**: Input sanitization and HTML tag detection.
+
+### Authentication & Authorization
+- **JWT Security**: Secure token generation with configurable expiration.
+- **Password Hashing**: bcrypt with salt rounds for secure password storage.
+- **Protected Routes**: JWT guard for sensitive endpoints.
+- **Secure Headers**: Helmet middleware with CORS and security headers.
+
+### Rate Limiting & DoS Protection
+- **Global Rate Limiting**: 100 requests per 15 minutes per IP.
+- **Auth-Specific Limits**: 5 signup attempts, 10 signin attempts per minute.
+- **Request Size Limits**: Protection against large payload attacks.
+
+## 🛠️ Tech Stack
+
+- **Framework**: NestJS (Node.js + TypeScript).
+- **Database**: MongoDB with Mongoose ODM.
+- **Authentication**: JWT with passport strategies.
+- **Validation**: class-validator & class-transformer.
+- **Security**: bcrypt, Helmet, rate limiting.
+- **Documentation**: Swagger.
+- **Logging**: Winston with colored console output.
+- **Testing**: Jest for unit and integration tests.
+
+## 📊 Project Structure
+
+```
+src/
+├── auth/              # Authentication module
+│   ├── auth.controller.ts    # Auth endpoints (signup, signin, profile)
+│   ├── auth.service.ts       # Business logic
+│   ├── jwt.strategy.ts       # JWT passport strategy
+│   ├── dtos/                 # Data transfer objects with validation
+│   └── guards/               # JWT authentication guard
+├── users/             # User management
+│   ├── users.repository.ts   # Database operations
+│   └── schemas/user.schema.ts # MongoDB user schema
+├── health/            # Health monitoring endpoints
+├── common/            # Shared utilities
+│   ├── constants/     # Application constants
+│   ├── filters/       # Global exception handling
+│   ├── middleware/    # Request logging, security
+│   └── utils/         # Helper functions
+└── config/            # Configuration files
+```
+
+## 🔧 Available Scripts
+
+```bash
+# Development
+npm run dev          # Start with MongoDB and file watching
+npm run start        # Start production mode
+npm run build        # Build for production
+
+# Database Management  
+npm run db:start     # Start MongoDB container
+npm run db:stop      # Stop MongoDB container
+npm run db:logs      # View database logs
+
+# Code Quality
+npm run test         # Run Jest tests
+npm run lint         # ESLint code checking
+npm run format       # Prettier code formatting
+
+# Monitoring
+npm run health       # Test health endpoint
+```
+
+## ⚙️ Environment Configuration
+
+Create `.env` file from `.env.example`:
 
 ```env
-# Application Configuration
+# Application
 PORT=3000
 NODE_ENV=development
 FRONTEND_URL=http://localhost:3001
 
-# Database Configuration
+# Database (MongoDB Docker container)
 MONGO_HOST=localhost
 MONGO_PORT=27017
 MONGO_DB_NAME=nest-auth
 MONGO_USER=admin
 MONGO_PASSWORD=adminpass1234
 
-# JWT Configuration (Generate strong secrets for production!)
-JWT_SECRET=your-super-secret-jwt-key-change-in-production-32chars
+# JWT Configuration (defaults provided)
+JWT_SECRET=your-secret-key-here
 JWT_EXPIRES_IN=1h
-JWT_REFRESH_SECRET=your-super-secret-refresh-key-change-in-production-32chars
+JWT_REFRESH_SECRET=your-refresh-secret-here
 JWT_REFRESH_EXPIRES_IN=7d
 ```
 
@@ -95,147 +157,28 @@ JWT_REFRESH_EXPIRES_IN=7d
 # Run all tests
 npm run test
 
+# Test specific modules
+npm run test -- --testPathPattern=auth
+npm run test -- --testPathPattern=users
 ```
 
-## 📚 API Documentation
+## 📖 API Documentation
 
-Once the server is running, visit:
-- **Swagger UI**: http://localhost:3000/api
-- **Health Check**: http://localhost:3000/health
-
-The Swagger UI provides:
-- Interactive API testing
+Visit http://localhost:3000/api for interactive Swagger documentation with:
 - Request/response examples
 - Authentication flow testing
-- Schema documentation
+- Schema validation details
+- Live API testing interface
 
-## 🔒 Security Features
+## � Production Notes
 
-### Input Protection
-- **Validation**: Comprehensive DTO validation with class-validator
-- **Sanitization**: XSS protection with HTML tag detection
-- **Type Safety**: TypeScript throughout with strict typing
-
-### Authentication & Authorization
-- **JWT Security**: Secure token generation with configurable expiration
-- **Refresh Tokens**: Automatic token rotation for enhanced security
-- **Secure Cookies**: HttpOnly, Secure, SameSite cookie configuration
-- **Password Hashing**: bcrypt with configurable salt rounds
-
-### Request Security
-- **Rate Limiting**: Configurable per endpoint (5 signup/min, 10 signin/min)
-- **Request Size Limits**: Protection against DoS attacks
-- **CORS Configuration**: Strict origin control
-- **Security Headers**: Comprehensive headers via Helmet middleware
-
-### Monitoring & Logging
-- **Request Logging**: Detailed HTTP request/response logging
-- **Error Tracking**: Global exception handling with stack traces
-- **Health Monitoring**: Multiple health check endpoints
-- **Performance Metrics**: Response time and size tracking
-
-## 🏗️ Project Structure
-
-```
-src/
-├── auth/              # Authentication module
-│   ├── dtos/         # Data Transfer Objects
-│   ├── guards/       # Route guards (JWT, etc.)
-│   └── strategies/   # Passport strategies
-├── users/            # User management module
-│   ├── schemas/      # MongoDB schemas
-│   └── repositories/ # Data access layer
-├── health/           # Health monitoring module
-├── common/           # Shared utilities and constants
-│   ├── constants/    # Application constants
-│   ├── filters/      # Exception filters
-│   ├── middleware/   # Custom middleware
-│   ├── transforms/   # Data transformation
-│   └── utils/        # Utility functions
-├── config/           # Configuration files
-└── docs/             # API documentation
-```
-
-## 🔧 Available Scripts
-
-```bash
-# Development
-npm run start:dev      # Start with file watching and database
-npm run start:debug    # Start in debug mode
-
-# Production
-npm run build          # Build for production
-npm run start:prod     # Start production server
-
-# Database Management
-npm run db:start       # Start MongoDB container
-npm run db:stop        # Stop MongoDB container
-npm run db:logs        # View database logs
-
-# Code Quality
-npm run lint           # Run ESLint
-npm run lint:fix       # Fix ESLint issues
-npm run format         # Format code with Prettier
-
-# Testing & Health
-npm run test           # Run all tests
-npm run health:check   # Test health endpoint
-```
-
-## 🚀 Production Deployment
-
-### Environment Variables for Production
-
-**Critical Security Settings:**
-```env
-# Generate cryptographically strong secrets (32+ characters)
-JWT_SECRET=generate-strong-32char-secret-here
-JWT_REFRESH_SECRET=generate-different-32char-secret
-
-# Production environment
-NODE_ENV=production
-
-# Secure database credentials
-MONGO_USER=secure-username
-MONGO_PASSWORD=secure-complex-password
-
-# Production frontend URL
-FRONTEND_URL=https://yourdomain.com
-```
-
-## 🛡️ Security Considerations
-
-### Pre-Production Checklist
-1. **JWT Secrets**: Generate cryptographically strong secrets (32+ characters)
-2. **Database Security**: Use strong MongoDB credentials and enable authentication
-3. **HTTPS**: Always use HTTPS in production environments
-4. **Environment Variables**: Never commit `.env` files to version control
-5. **Rate Limiting**: Adjust limits based on your traffic patterns
-6. **Logging**: Configure log rotation and monitoring
-7. **Updates**: Keep dependencies updated and monitor security advisories
-
-### Production Security Headers
-The application automatically sets secure headers including:
-- `Strict-Transport-Security` for HTTPS enforcement
-- `Content-Security-Policy` for XSS protection
-- `X-Content-Type-Options` to prevent MIME sniffing
-- `X-Frame-Options` for clickjacking protection
-
-## 📈 Performance Features
-
-- **Request Size Limits**: Protection against large payload DoS attacks (10MB default)
-- **Async Operations**: Non-blocking I/O operations throughout the application
-- **Response Time Tracking**: Built-in request/response duration monitoring in middleware
-- **Efficient Error Handling**: Global exception filter with proper HTTP status codes
-
-## 🎯 Future Enhancements
-
-- [ ] **Role-Based Access Control (RBAC)** - User roles and permissions
-- [ ] **Password Reset Flow** - Secure password recovery
-- [ ] **User Profile Management** - Extended user information
-- [ ] **Redis Integration** - Session management and caching
-- [ ] **OAuth2 Integration** - Social login providers
+For production deployment:
+1. Generate strong JWT secrets (32+ characters)
+2. Use production MongoDB credentials
+3. Enable HTTPS
+4. Configure proper CORS origins
+5. Set up log rotation and monitoring
 
 ---
 
-**Built with ❤️ for production environments**
+**Built with security, scalability, and maintainability as core principles.**
