@@ -44,6 +44,7 @@ The API will be available at:
 | `POST` | `/auth/signup` | User registration with validation | Public |
 | `POST` | `/auth/signin` | User authentication | Public |
 | `GET` | `/auth/profile` | Get current user details | **Protected** |
+| `POST` | `/auth/refresh-token` | Refresh expired access token | **Protected** |
 | `POST` | `/auth/logout` | User logout | **Protected** |
 
 ### Health Monitoring
@@ -63,9 +64,18 @@ The API will be available at:
 
 ### Authentication & Authorization
 - **JWT Security**: Secure token generation with configurable expiration.
+- **Dual Token System**: Access tokens (1h) and refresh tokens (7d) for enhanced security.
+- **Token Rotation**: Automatic refresh token rotation on each refresh request.
 - **Password Hashing**: bcrypt with salt rounds for secure password storage.
 - **Protected Routes**: JWT guard for sensitive endpoints.
 - **Secure Headers**: Helmet middleware with CORS and security headers.
+
+### Token Management
+- **Access Token**: Short-lived (1 hour) for API authentication.
+- **Refresh Token**: Long-lived (7 days) stored as secure HTTP-only cookies.
+- **Automatic Refresh**: Frontend automatically refreshes expired access tokens.
+- **Token Revocation**: Logout invalidates both access and refresh tokens.
+- **Secure Storage**: Refresh tokens stored hashed in database.
 
 ### Rate Limiting & DoS Protection
 - **Global Rate Limiting**: 100 requests per 15 minutes per IP.
@@ -146,9 +156,9 @@ MONGO_PASSWORD=adminpass1234
 
 # JWT Configuration (defaults provided)
 JWT_SECRET=your-secret-key-here
-JWT_EXPIRES_IN=1h
+JWT_EXPIRES_IN=1h                    # Access token expiration
 JWT_REFRESH_SECRET=your-refresh-secret-here
-JWT_REFRESH_EXPIRES_IN=7d
+JWT_REFRESH_EXPIRES_IN=7d            # Refresh token expiration
 ```
 
 ## 🧪 Testing
@@ -169,6 +179,26 @@ Visit http://localhost:3000/api for interactive Swagger documentation with:
 - Authentication flow testing
 - Schema validation details
 - Live API testing interface
+
+## 🔄 Authentication Flow
+
+### Initial Authentication
+1. **Sign Up/Sign In**: User provides credentials
+2. **Token Generation**: Server creates access token (1h) + refresh token (7d)
+3. **Cookie Storage**: Refresh token stored as secure HTTP-only cookie
+4. **Response**: Access token returned for API requests
+
+### Token Refresh Cycle
+1. **Token Expiration**: Access token expires after 1 hour
+2. **Auto Refresh**: Frontend detects 401 errors and calls `/auth/refresh-token`
+3. **Token Rotation**: New access token + new refresh token generated
+4. **Seamless UX**: User stays logged in without interruption
+
+### Security Benefits
+- **Short Access Token Lifespan**: Limits exposure if compromised
+- **HTTP-Only Cookies**: Prevents XSS attacks on refresh tokens  
+- **Token Rotation**: Each refresh invalidates previous refresh token
+- **Automatic Logout**: Failed refresh redirects to sign-in page
 
 ## � Production Notes
 
