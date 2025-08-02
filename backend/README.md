@@ -17,6 +17,7 @@ NestJS-based authentication system with MongoDB.
 ### Prerequisites
 - Node.js (v18+)
 - Docker (for MongoDB)
+  - **GUI Users**: If you're using Docker Desktop or another Docker GUI, please ensure it's running before starting the application
 
 ### Setup & Run
 
@@ -30,6 +31,8 @@ cp .env.example .env
 # Start MongoDB and development server
 npm run dev
 ```
+
+> **💡 Docker GUI Reminder**: Make sure Docker Desktop (or your Docker GUI) is running before executing the above command.
 
 The API will be available at:
 - **Base URL**: http://localhost:3000
