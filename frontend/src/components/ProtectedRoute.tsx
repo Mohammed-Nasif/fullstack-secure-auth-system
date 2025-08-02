@@ -31,11 +31,7 @@ const ProtectedRoute = ({
       
     case AuthState.AUTHENTICATED:
       if (showUserInfo && user) {
-        console.log('✅ Authenticated user:', { 
-          id: user.id, 
-          email: user.email, 
-          name: user.name 
-        });
+        console.log('✅ Authenticated user:', user.name);
       }
       return <>{children}</>;
       
