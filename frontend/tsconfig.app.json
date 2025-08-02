@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "composite": true,
+    "outDir": "dist",
+    "noEmit": false,
+
     "target": "ES2022",
-    "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "useDefineForClassFields": true,
     "skipLibCheck": true,
-    "composite": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
     "moduleDetection": "force",
-    "noEmit": false,
     "jsx": "react-jsx",
 
     /* Linting */
