@@ -1,4 +1,4 @@
-# 🔐 Authentication API - Backend
+# Authentication API - Backend
 
 NestJS-based authentication system with MongoDB.
 
