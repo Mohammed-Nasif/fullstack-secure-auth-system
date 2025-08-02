@@ -1,6 +1,6 @@
 import { Alert } from '@mui/material';
 import { useProfile } from '../hooks/useProfile';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import Navbar from '../components/layouts/Navbar';
 import ProfileCard from '../components/ui/ProfileCard';
 

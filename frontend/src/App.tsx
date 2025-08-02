@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Home from './pages/Home';
-import ProtectedRoute from './components/ProtectedRoute';
-import AuthRedirect from './components/AuthRedirect';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import AuthRedirect from './components/auth/AuthRedirect';
 
 function App() {
   return (

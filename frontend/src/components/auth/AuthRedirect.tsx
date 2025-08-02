@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import { useAuthGuard, AuthState } from '../hooks/useAuthGuard';
-import LoadingSpinner from './LoadingSpinner';
+import { useAuthGuard, AuthState } from '../../hooks/useAuthGuard';
+import LoadingSpinner from '../ui/LoadingSpinner';
 
 interface AuthRedirectProps {
   children: React.ReactNode;
