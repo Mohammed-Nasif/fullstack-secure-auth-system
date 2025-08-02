@@ -4,13 +4,13 @@ React-based authentication interface with TypeScript.
 
 ## 📋 Requirements Fulfilled
 
-✅ **React Framework**: Modern React 19 with TypeScript.
-✅ **Sign Up Page**: Email validation, name (3+ chars), password complexity.
-✅ **Sign In Page**: Email and password authentication.
-✅ **Application Page**: Welcome message with logout functionality.
-✅ **TypeScript**: Full type safety throughout the application.
-✅ **Form Validation**: Comprehensive client-side validation Using React Hook Form.
-✅ **Responsive Design**: Clean, modern UI with Material-UI.
+- ✅ **React Framework**: Modern React 19 with TypeScript.
+- ✅ **Sign Up Page**: Email validation, name (3+ chars), password complexity.
+- ✅ **Sign In Page**: Email and password authentication.
+- ✅ **Application Page**: Welcome message with logout functionality.
+- ✅ **TypeScript**: Full type safety throughout the application.
+- ✅ **Form Validation**: Comprehensive client-side validation using React Hook Form.
+- ✅ **Responsive Design**: Clean, modern UI with Material-UI.
 
 ## 🚀 Quick Start
 

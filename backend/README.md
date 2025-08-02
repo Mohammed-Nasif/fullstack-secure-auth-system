@@ -4,13 +4,13 @@ NestJS-based authentication system with MongoDB.
 
 ## 📋 Requirements Fulfilled
 
-✅ **NestJS Framework**: Enterprise-grade Node.js framework with TypeScript. 
-✅ **MongoDB Integration**: User data persistence with Mongoose ODM.
-✅ **Authentication Endpoints**: Sign up, sign in with validation.
-✅ **Protected Endpoints**: JWT-based route protection.
-✅ **Security Best Practices**: Password hashing, input validation, rate limiting.
-✅ **Logging**: Comprehensive request/response logging.
-✅ **API Documentation**: Interactive Swagger documentation.
+- ✅ **NestJS Framework**: Enterprise-grade Node.js framework with TypeScript.
+- ✅ **MongoDB Integration**: User data persistence with Mongoose ODM.
+- ✅ **Authentication Endpoints**: Sign up, sign in with validation.
+- ✅ **Protected Endpoints**: JWT-based route protection.
+- ✅ **Security Best Practices**: Password hashing, input validation, rate limiting.
+- ✅ **Logging**: Comprehensive request/response logging.
+- ✅ **API Documentation**: Interactive Swagger documentation.
 
 ## 🚀 Quick Start
 
@@ -206,11 +206,11 @@ Visit http://localhost:3000/api for interactive Swagger documentation with:
 ## � Production Notes
 
 For production deployment:
-1. Generate strong JWT secrets (32+ characters)
-2. Use production MongoDB credentials
-3. Enable HTTPS
-4. Configure proper CORS origins
-5. Set up log rotation and monitoring
+1. Generate strong JWT secrets (32+ characters).
+2. Use production MongoDB credentials.
+3. Configure environment-specific settings.
+4. Configure proper CORS origins.
+5. Set up log rotation and monitoring.
 
 ---
 
