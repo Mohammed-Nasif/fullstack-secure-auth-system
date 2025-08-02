@@ -139,9 +139,12 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'User profile retrieved successfully' })
   async getProfile(@Req() req: Request) {
     const user = req.user as { userId: string, email: string };
+    const profile = await this.authService.getProfile(user.userId);
+
     return createSuccessResponse(AUTH_MESSAGES.PROFILE_SUCCESS, {
       id: user.userId,
-      email: user.email
+      email: user.email,
+      name: profile?.name,
     });
   }
 }
