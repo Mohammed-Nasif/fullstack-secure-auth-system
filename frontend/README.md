@@ -156,23 +156,50 @@ npm run lint:fix     # Fix ESLint issues automatically
 
 ## 🌐 API Integration
 
-The frontend communicates with the backend through axios-based services:
+The frontend communicates with the backend through axios-based services with automatic token refresh:
 
 ```typescript
 // Authentication API endpoints
-POST /auth/signup    - User registration
-POST /auth/signin    - User authentication
-GET  /auth/profile   - Get user profile (protected)
-POST /auth/logout    - User logout (protected)
+POST /auth/signup       - User registration
+POST /auth/signin       - User authentication  
+GET  /auth/profile      - Get user profile (protected)
+POST /auth/refresh-token - Refresh access token (protected)
+POST /auth/logout       - User logout (protected)
 ```
+
+**Automatic Token Management:**
+- All API calls are intercepted by axios middleware
+- 401 responses trigger automatic token refresh attempts
+- Failed requests are queued and retried after successful refresh
+- Session expires gracefully when refresh tokens are invalid
 
 ## 🔄 Authentication Flow
 
 1. **Sign Up**: User registration with form validation
 2. **Sign In**: User authentication with credential verification
-3. **Token Storage**: JWT tokens stored securely
-4. **Route Protection**: Automatic redirect for protected routes
-5. **Logout**: Clear tokens and redirect to sign in
+3. **Token Storage**: JWT tokens stored securely in HTTP-only cookies
+4. **Auto Token Refresh**: Seamless token renewal on 401 errors
+5. **Route Protection**: Automatic redirect for protected routes
+6. **Session Management**: Automatic logout when refresh fails
+7. **Logout**: Clear tokens and redirect to sign in
+
+### 🔐 Automatic Token Refresh
+
+The application implements automatic token refresh to handle expired access tokens seamlessly:
+
+**How it works:**
+- When any API call receives a 401 (Unauthorized) response, the app automatically attempts to refresh the token
+- If refresh succeeds, the original request is retried automatically
+- If refresh fails, the user is redirected to the sign-in page with a session expired message
+- Multiple concurrent 401 errors are queued and handled efficiently
+
+**Benefits:**
+- **Seamless UX**: Users never see token expiration errors
+- **Security**: Access tokens can have short lifespans (1 hour)
+- **Reliability**: Failed requests are automatically retried after token refresh
+- **No Interruption**: Users can continue working without manual re-authentication
+
+```
 
 ## 📱 Responsive Design
 
