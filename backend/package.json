@@ -20,8 +20,7 @@
     "db:stop": "docker stop nest-mongo",
     "db:remove": "docker rm -f nest-mongo",
     "db:logs": "docker logs nest-mongo",
-    "health": "curl http://localhost:3000/health",
-    "security:audit": "npm audit"
+    "health": "curl http://localhost:3000/health"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
