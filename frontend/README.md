@@ -82,12 +82,19 @@ The application will be available at http://localhost:3001
 ```
 src/
 ├── components/           # Reusable UI components
-│   ├── AuthRedirect.tsx     # Auto redirect based on auth
-│   ├── LoadingSpinner.tsx   # Loading indicator
-│   ├── ProtectedRoute.tsx   # Route protection
-│   └── forms/               # Form-specific components
-│       ├── FormInput.tsx       # Input with validation
-│       └── SubmitButton.tsx    # Submit button with loading
+│   ├── auth/                # Authentication-related components
+│   │   ├── AuthRedirect.tsx    # Auto redirect based on auth
+│   │   └── ProtectedRoute.tsx  # Route protection
+│   ├── forms/               # Form-specific components
+│   │   ├── FormInput.tsx       # Input with validation
+│   │   └── SubmitButton.tsx    # Submit button with loading
+│   ├── layouts/             # Layout components
+│   │   ├── AuthLayout.tsx      # Authentication page layout
+│   │   └── Navbar.tsx          # Navigation bar
+│   └── ui/                  # Generic UI components
+│       ├── AlertMessage.tsx    # Alert/notification messages
+│       ├── LoadingSpinner.tsx  # Loading indicator
+│       └── ProfileCard.tsx     # User profile card
 ├── hooks/               # Custom React hooks
 │   ├── useAuth.ts          # Authentication state management
 │   ├── useAuthForm.ts      # Form handling with validation

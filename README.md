@@ -91,6 +91,7 @@ The application will be available at:
 ├── frontend/         # React Application
 │   ├── src/
 │   │   ├── components/     # UI components
+│   │   │   ├── auth/       # Authentication components
 │   │   │   ├── forms/      # Form components
 │   │   │   ├── layouts/    # Layout components
 │   │   │   └── ui/         # Reusable UI components
