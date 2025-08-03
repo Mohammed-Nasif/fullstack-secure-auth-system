@@ -206,8 +206,6 @@ The application implements automatic token refresh to handle expired access toke
 - **Reliability**: Failed requests are automatically retried after token refresh.
 - **No Interruption**: Users can continue working without manual re-authentication.
 
-```
-
 ## Responsive Design
 
 - **Mobile-First**: Optimized for mobile devices with Tailwind's responsive utilities.
