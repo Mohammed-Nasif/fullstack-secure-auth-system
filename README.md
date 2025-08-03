@@ -1,6 +1,6 @@
 # Full Stack Secure Authentication System
 
-A production-ready authentication system built with **NestJS**, **MongoDB**, **React**, and **TypeScript** as per assessment requirements.
+A production-ready authentication system built with **NestJS**, **MongoDB**, **React**, and **TypeScript** as per requirements.
 
 ## 🚀 Quick Start
 
@@ -60,16 +60,16 @@ The application will be available at:
 - **Security Best Practices**: Password hashing, input validation, rate limiting.
 - **API Documentation**: Swagger documentation.
 
-### 🌟 Bonus Features
-- **Automatic Token Refresh**: Seamless user experience with automatic token renewal
-- **Comprehensive Logging**: Request/response logging with Winston
+### Bonus Features
+- **Automatic Token Refresh**: Seamless user experience with automatic token renewal.
+- **Comprehensive Logging**: Request/response logging with Winston.
 - **Error Handling**: Global exception filters.
 - **Health Monitoring**: Multiple health check endpoints.
 - **Testing**: Unit tests with Jest.
 - **Security Headers**: Helmet middleware with CORS protection.
 - **Rate Limiting**: Protection against brute force attacks.
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 ├── backend/          # NestJS API Server
@@ -118,6 +118,7 @@ The application will be available at:
 - **Framework**: React 19 with TypeScript.
 - **Routing**: React Router v7.
 - **UI Library**: Material-UI (MUI).
+- **Styling**: Tailwind CSS for utility-first styling.
 - **Build Tool**: Vite.
 - **Form Handling**: React Hook Form.
 - **HTTP Client**: Axios.

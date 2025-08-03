@@ -30,7 +30,7 @@ npm run dev
 
 The application will be available at http://localhost:3001
 
-## 📱 Application Pages
+## Application Pages
 
 ### 1. Sign Up Page (`/signup`)
 **Form Fields with Validation:**
@@ -54,7 +54,7 @@ The application will be available at http://localhost:3001
 - Logout button to end session.
 - Automatic redirect to signin if not authenticated.
 
-## 🎨 UI Components & Features
+## UI Components & Features
 
 ### Form Components
 - **FormInput**: Reusable input component with validation display.
@@ -72,12 +72,12 @@ The application will be available at http://localhost:3001
 - **Framework**: React 19 with TypeScript.
 - **Routing**: React Router v7 for navigation.
 - **UI Library**: Material-UI (MUI) for components.
+- **Styling**: Tailwind CSS for utility-first styling + Material-UI system.
 - **Form Handling**: React Hook Form for validation.
 - **HTTP Client**: Axios for API communication.
 - **Build Tool**: Vite for fast development and building.
-- **Styling**: Material-UI system with theme support.
 
-## 📊 Project Structure
+## Project Structure
 
 ```
 src/
@@ -112,7 +112,7 @@ src/
 └── main.tsx             # Application entry point
 ```
 
-## 🔐 Form Validation Rules
+## Form Validation Rules
 
 ### Sign Up Validation
 ```typescript
@@ -148,7 +148,7 @@ password: {
 }
 ```
 
-## 🔧 Available Scripts
+## Available Scripts
 
 ```bash
 # Development
@@ -175,62 +175,53 @@ POST /auth/logout       - User logout (protected)
 ```
 
 **Automatic Token Management:**
-- All API calls are intercepted by axios middleware
-- 401 responses trigger automatic token refresh attempts
-- Failed requests are queued and retried after successful refresh
-- Session expires gracefully when refresh tokens are invalid
+- All API calls are intercepted by axios middleware.
+- 401 responses trigger automatic token refresh attempts.
+- Failed requests are queued and retried after successful refresh.
+- Session expires gracefully when refresh tokens are invalid.
 
 ## 🔄 Authentication Flow
 
-1. **Sign Up**: User registration with form validation
-2. **Sign In**: User authentication with credential verification
-3. **Token Storage**: JWT tokens stored securely in HTTP-only cookies
-4. **Auto Token Refresh**: Seamless token renewal on 401 errors
-5. **Route Protection**: Automatic redirect for protected routes
-6. **Session Management**: Automatic logout when refresh fails
-7. **Logout**: Clear tokens and redirect to sign in
+1. **Sign Up**: User registration with form validation.
+2. **Sign In**: User authentication with credential verification.
+3. **Token Storage**: JWT tokens stored securely in HTTP-only cookies.
+4. **Auto Token Refresh**: Seamless token renewal on 401 errors.
+5. **Route Protection**: Automatic redirect for protected routes.
+6. **Session Management**: Automatic logout when refresh fails.
+7. **Logout**: Clear tokens and redirect to sign in.
 
 ### 🔐 Automatic Token Refresh
 
 The application implements automatic token refresh to handle expired access tokens seamlessly:
 
 **How it works:**
-- When any API call receives a 401 (Unauthorized) response, the app automatically attempts to refresh the token
-- If refresh succeeds, the original request is retried automatically
-- If refresh fails, the user is redirected to the sign-in page with a session expired message
-- Multiple concurrent 401 errors are queued and handled efficiently
+- When any API call receives a 401 (Unauthorized) response, the app automatically attempts to refresh the token.
+- If refresh succeeds, the original request is retried automatically.
+- If refresh fails, the user is redirected to the sign-in page with a session expired message.
+- Multiple concurrent 401 errors are queued and handled efficiently.
 
 **Benefits:**
-- **Seamless UX**: Users never see token expiration errors
-- **Security**: Access tokens can have short lifespans (1 hour)
-- **Reliability**: Failed requests are automatically retried after token refresh
-- **No Interruption**: Users can continue working without manual re-authentication
+- **Seamless UX**: Users never see token expiration errors.
+- **Security**: Access tokens can have short lifespans (1 hour).
+- **Reliability**: Failed requests are automatically retried after token refresh.
+- **No Interruption**: Users can continue working without manual re-authentication.
 
 ```
 
-## 📱 Responsive Design
+## Responsive Design
 
-- **Mobile-First**: Optimized for mobile devices
-- **Material Design**: Following Google's Material Design principles
-- **Consistent Theme**: Unified color scheme and typography
-- **Accessibility**: ARIA labels and keyboard navigation support
+- **Mobile-First**: Optimized for mobile devices with Tailwind's responsive utilities.
+- **Component-Based UI**: Material-UI components for consistent form elements and interactions.
+- **Utility-First Styling**: Tailwind CSS for rapid UI development and consistent spacing.
+- **Consistent Theme**: Unified color scheme and typography across MUI and Tailwind.
+- **Form Usability**: Proper form validation feedback and loading states.
 
-## ⚙️ Environment Configuration
+## Development Features
 
-Create `.env` file if you need to customize API endpoint:
-
-```env
-VITE_API_BASE_URL=http://localhost:3000
-```
-
-## 🧪 Development Features
-
-- **Hot Reload**: Instant updates during development
-- **TypeScript**: Full type checking and IntelliSense
-- **ESLint**: Code quality and consistency checking
-- **Form Validation**: Real-time validation feedback
-- **Error Handling**: User-friendly error messages
-- **Loading States**: Visual feedback for async operations
+- **Hot Reload**: Instant updates during development with Vite.
+- **TypeScript**: Full type checking and IntelliSense support.
+- **ESLint**: Code quality and consistency checking with React hooks linting.
+- **Fast Build**: Vite for rapid development and optimized production builds.
 
 ---
 

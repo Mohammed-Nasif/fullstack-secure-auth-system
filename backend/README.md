@@ -4,7 +4,7 @@ NestJS-based authentication system with MongoDB.
 
 ## 📋 Requirements Fulfilled
 
-- ✅ **NestJS Framework**: Enterprise-grade Node.js framework with TypeScript.
+- ✅ **NestJS Framework**: Node.js framework with TypeScript support.
 - ✅ **MongoDB Integration**: User data persistence with Mongoose ODM.
 - ✅ **Authentication Endpoints**: Sign up, sign in with validation.
 - ✅ **Protected Endpoints**: JWT-based route protection.
@@ -57,7 +57,7 @@ The API will be available at:
 | `GET` | `/health/database` | Database connectivity |
 | `GET` | `/health/detailed` | Comprehensive diagnostics |
 
-## � Security Features
+## 🔐 Security Features
 
 ### Input Validation & Security
 - **DTO Validation**: Comprehensive field validation using class-validator.
@@ -96,7 +96,7 @@ The API will be available at:
 - **Logging**: Winston with colored console output.
 - **Testing**: Jest for unit and integration tests.
 
-## 📊 Project Structure
+## Project Structure
 
 ```
 src/
@@ -118,7 +118,7 @@ src/
 └── config/            # Configuration files
 ```
 
-## 🔧 Available Scripts
+## Available Scripts
 
 ```bash
 # Development
@@ -140,7 +140,7 @@ npm run format       # Prettier code formatting
 npm run health       # Test health endpoint
 ```
 
-## ⚙️ Environment Configuration
+## Environment Configuration
 
 Create `.env` file from `.env.example`:
 
@@ -157,22 +157,18 @@ MONGO_DB_NAME=nest-auth
 MONGO_USER=admin
 MONGO_PASSWORD=adminpass1234
 
-# JWT Configuration (defaults provided)
+# JWT Configuration
 JWT_SECRET=your-secret-key-here
 JWT_EXPIRES_IN=1h                    # Access token expiration
 JWT_REFRESH_SECRET=your-refresh-secret-here
 JWT_REFRESH_EXPIRES_IN=7d            # Refresh token expiration
 ```
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run all tests
 npm run test
-
-# Test specific modules
-npm run test -- --testPathPattern=auth
-npm run test -- --testPathPattern=users
 ```
 
 ## 📖 API Documentation
@@ -186,24 +182,24 @@ Visit http://localhost:3000/api for interactive Swagger documentation with:
 ## 🔄 Authentication Flow
 
 ### Initial Authentication
-1. **Sign Up/Sign In**: User provides credentials
-2. **Token Generation**: Server creates access token (1h) + refresh token (7d)
-3. **Cookie Storage**: Refresh token stored as secure HTTP-only cookie
-4. **Response**: Access token returned for API requests
+1. **Sign Up/Sign In**: User provides credentials.
+2. **Token Generation**: Server creates access token (1h) + refresh token (7d).
+3. **Cookie Storage**: Refresh token stored as secure HTTP-only cookie.
+4. **Response**: Access token returned for API requests.
 
 ### Token Refresh Cycle
-1. **Token Expiration**: Access token expires after 1 hour
-2. **Auto Refresh**: Frontend detects 401 errors and calls `/auth/refresh-token`
-3. **Token Rotation**: New access token + new refresh token generated
-4. **Seamless UX**: User stays logged in without interruption
+1. **Token Expiration**: Access token expires after 1 hour.
+2. **Auto Refresh**: Frontend detects 401 errors and calls `/auth/refresh-token`.
+3. **Token Rotation**: New access token + new refresh token generated.
+4. **Seamless UX**: User stays logged in without interruption.
 
 ### Security Benefits
-- **Short Access Token Lifespan**: Limits exposure if compromised
-- **HTTP-Only Cookies**: Prevents XSS attacks on refresh tokens  
-- **Token Rotation**: Each refresh invalidates previous refresh token
-- **Automatic Logout**: Failed refresh redirects to sign-in page
+- **Short Access Token Lifespan**: Limits exposure if compromised.
+- **HTTP-Only Cookies**: Prevents XSS attacks on refresh tokens.
+- **Token Rotation**: Each refresh invalidates previous refresh token.
+- **Automatic Logout**: Failed refresh redirects to sign-in page.
 
-## � Production Notes
+## Production Notes
 
 For production deployment:
 1. Generate strong JWT secrets (32+ characters).
